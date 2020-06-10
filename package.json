@@ -12,7 +12,7 @@
     "cypress": "concurrently \"npm start\" \"cypress open\"",
     "cypress:headless": "concurrently \"npm start\" \"cypress run\"",
     "playground": "angular-playground",
-    "postinstall": "ng build --watch"
+    "postinstall": "ng build --aot --prod"
   },
   "dependencies": {
     "@angular/cli": "~9.1.0",

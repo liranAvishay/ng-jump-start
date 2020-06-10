@@ -1,0 +1,56 @@
+<div class="addContainer">
+  <button class="btn btn-primary" (click)="addProduct()">
+    <span class="glyphicon glyphicon-plus"></span> Add Product
+  </button>
+</div>
+
+<form [formGroup]="newOrderForm" (ngSubmit)="submit(newOrderForm)" class="login-form" novalidate>
+  <div class="form-group" *ngFor="let product of products.controls;let i = index">
+    <div class="row" formArrayName="products">
+      <ng-container [formGroupName]="i">
+        <div class="col-md-10">
+
+          <div class="constrolHeader">
+            <label>Product</label>
+            <button *ngIf="i!==0" type="button" class="btn-remove glyphicon glyphicon-remove"
+              (click)="removeProduct(i)"></button>
+          </div>
+          <select class="form-control" formControlName="productId" required>
+            <option *ngFor="let product of productsList" [value]="product.id">
+              {{product.productName }} - {{product.itemCost | currency:'USD':'symbol' }}
+            </option>
+          </select>
+
+
+        </div>
+
+        <div class="col-md-2">
+          <label>Amount</label>
+          <input type="tel" class="form-control" formControlName="amount" />
+        </div>
+
+      </ng-container>
+    </div>
+
+    <div class="alert alert-danger"
+      *ngIf="products.controls[i].get('productId').errors?.required && products.controls[i].get('productId').touched">
+      Product is
+      required
+    </div>
+
+    <div class="alert alert-danger" *ngIf="products.controls[i].get('amount').errors?.required">Amount is
+      required
+    </div>
+
+    <div class="alert alert-danger"
+      *ngIf="!products.controls[i].get('amount').errors?.required && !products.controls[i].get('amount').valid">
+      Amount must contain
+      only numbers
+    </div>
+  </div>
+  
+  <div>Total cost: {{totalCost | currency:'USD':'symbol'}}</div>  
+  <div class="pull-right">
+    <button type="submit" class="btn btn-success" [disabled]="!newOrderForm.valid">submit</button>
+  </div>
+</form>

@@ -4,7 +4,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map, catchError } from 'rxjs/operators';
 
-import { ICustomer, IOrder, IState, IPagedResults, IApiResponse, IOrderItem ,INewOrder} from '../../shared/interfaces';
+import { ICustomer, IOrder, IState, IPagedResults, IApiResponse, IProduct ,INewOrder} from '../../shared/interfaces';
 import { UtilitiesService } from './utilities.service';
 
 @Injectable()
@@ -83,8 +83,8 @@ export class DataService {
             .pipe(catchError(this.handleError));
     }
 
-    getProducts(): Observable<IOrderItem[]> {
-        return this.http.get<IOrderItem[]>(this.baseUrl + '/api/products')
+    getProducts(): Observable<IProduct[]> {
+        return this.http.get<IProduct[]>(this.baseUrl + '/api/products')
             .pipe(catchError(this.handleError));
     }
 

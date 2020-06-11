@@ -8,8 +8,8 @@
   <div class="form-group" *ngFor="let product of products.controls;let i = index">
     <div class="row" formArrayName="products">
       <ng-container [formGroupName]="i">
+        
         <div class="col-md-10">
-
           <div class="constrolHeader">
             <label>Product</label>
             <button *ngIf="i!==0" type="button" class="btn-remove glyphicon glyphicon-remove"
@@ -20,13 +20,11 @@
               {{product.productName }} - {{product.itemCost | currency:'USD':'symbol' }}
             </option>
           </select>
-
-
         </div>
 
         <div class="col-md-2">
-          <label>Amount</label>
-          <input type="tel" class="form-control" formControlName="amount" />
+          <label>Quantity</label>
+          <input type="tel" class="form-control" formControlName="quantity" />
         </div>
 
       </ng-container>
@@ -34,23 +32,23 @@
 
     <div class="alert alert-danger"
       *ngIf="products.controls[i].get('productId').errors?.required && products.controls[i].get('productId').touched">
-      Product is
-      required
+      Product is required
     </div>
 
-    <div class="alert alert-danger" *ngIf="products.controls[i].get('amount').errors?.required">Amount is
-      required
-    </div>
+    <div class="alert alert-danger" *ngIf="products.controls[i].get('quantity').errors?.required">Quantity is required</div>
 
     <div class="alert alert-danger"
-      *ngIf="!products.controls[i].get('amount').errors?.required && !products.controls[i].get('amount').valid">
-      Amount must contain
-      only numbers
+      *ngIf="!products.controls[i].get('quantity').errors?.required && !products.controls[i].get('quantity').valid">
+      Quantity must contain only numbers
     </div>
+
   </div>
   
-  <div>Total cost: {{totalCost | currency:'USD':'symbol'}}</div>  
-  <div class="pull-right">
-    <button type="submit" class="btn btn-success" [disabled]="!newOrderForm.valid">submit</button>
+  <div>Total cost: {{totalCost | currency:'USD':'symbol'}}</div> 
+
+  <div class="row btnContainer">
+    <div class="col-md-2">
+      <button type="submit" class="btn btn-success col-md-2" [disabled]="!newOrderForm.valid">Add</button>
+    </div>
   </div>
 </form>

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormArray } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
 import { DataService } from 'src/app/core/services/data.service';
-import { IOrderItem, INewOrder } from 'src/app/shared/interfaces';
+import { IProduct, INewOrder } from 'src/app/shared/interfaces';
 import { ValidationService } from '../core/services/validation.service';
 
 @Component({
@@ -13,7 +13,7 @@ import { ValidationService } from '../core/services/validation.service';
 export class NewOrderComponent implements OnInit {
     newOrderForm: FormGroup;
     customerId: number;
-    productsList: IOrderItem[] = [];
+    productsList: IProduct[] = [];
     totalCost: number = 0;
 
     constructor(private router: Router, private route: ActivatedRoute, private formBuilder: FormBuilder, private dataService: DataService) { }
@@ -22,7 +22,7 @@ export class NewOrderComponent implements OnInit {
         this.buildForm();
         this.route.parent.params.subscribe((params: Params) => this.customerId = +params['id']);
 
-        this.dataService.getProducts().subscribe((products: IOrderItem[]) => {
+        this.dataService.getProducts().subscribe((products: IProduct[]) => {
             this.productsList = [...products].sort((a: any, b: any) => a.productName < b.productName ? -1 : 1);
         });
         this.onFormChanges();
@@ -44,9 +44,9 @@ export class NewOrderComponent implements OnInit {
 
     calculateCost(products): number {
         return products.reduce((acc, currVal) => {
-            if (currVal.productId && currVal.amount > 0) {
+            if (currVal.productId && currVal.quantity > 0) {
                 const orderItem = this.productsList.find(p => p.id === +currVal.productId)
-                return acc + orderItem.itemCost * currVal.amount;
+                return acc + orderItem.itemCost * currVal.quantity;
             }
             return acc;
         }, 0).toFixed(2);
@@ -59,7 +59,7 @@ export class NewOrderComponent implements OnInit {
     createProductControl(): FormGroup {
         return this.formBuilder.group({
             productId: [null, Validators.required],
-            amount: ['1', [Validators.required, ValidationService.onlyNumbersValidator]]
+            quantity: ['1', [Validators.required, ValidationService.onlyNumbersValidator]]
         })
     }
 

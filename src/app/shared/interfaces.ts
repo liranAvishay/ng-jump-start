@@ -52,6 +52,12 @@ export interface IApiResponse {
     error?: string;
 }
 
+export interface IProduct {
+    id: number;
+    productName: string;
+    itemCost: number;
+}
+
 export interface INewOrder{
     customerId:number,
     newProducts:INewProduct[]
@@ -59,5 +65,5 @@ export interface INewOrder{
 
 export interface INewProduct{
     productId:string,
-    amount:string
+    quantity:string
 }

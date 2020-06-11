@@ -1,12 +1,23 @@
 .addContainer{
     margin:25px 0;
 }
+
 .constrolHeader{
     display: flex;
     justify-content: space-between;
 }
+
 .btn-remove{
     color: red;
     border: none;
     background: none;
+}
+
+.btnContainer{
+    display: flex;
+    justify-content: flex-end;
+}
+
+.btnContainer .btn{
+    width: 100%;
 }

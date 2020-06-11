@@ -153,18 +153,18 @@ console.log('Express listening on port ' + port);
 
 //Open browser
 if (!inContainer && !inAzure) {
-    // var opn = require('opn');
+    var opn = require('opn');
 
-    // opn('http://localhost:' + port).then(() => {
-    //     console.log('Browser closed.');
-    // });
+    opn('http://localhost:' + port).then(() => {
+        console.log('Browser closed.');
+    });
 }
 
 const createProductsList = (newProducts) =>{
     let prods = [];
     newProducts.forEach(prod => {
         const p = products.find(p=>p.id==prod.productId);
-        for(let i = 0; i < prod.amount; i++){
+        for(let i = 0; i < prod.quantity; i++){
             prods.push(p)
         }
     });
